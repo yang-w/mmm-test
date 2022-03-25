@@ -1,0 +1,87 @@
+.seo-multimedia-html {
+    img {
+        display: block;
+        margin: 0 auto;
+        max-width: 300px;
+        max-height: 300px;
+    }
+
+    .content {
+        a {
+            text-decoration: underline;
+        }
+    }
+    &.show-less {
+        .content {
+            max-height: 220px;
+            overflow: hidden;
+        }
+        .footer {
+            padding-top: 10px;
+            .footer__btn--viewAll {
+                display: inline-block;
+            }
+            .footer__btn--viewLess {
+                display: none;
+            }
+            .transparent {
+              height: 10px;
+              box-shadow: 0 -15px 10px #fff;
+              content: '';
+              display: block;
+              left: 0;
+              position: relative;
+              width: 100%;
+              background-color: #fff;
+              z-index: 1;
+            }
+        }
+    }
+    .footer {
+        text-align: center;
+        color: #0654ba;
+        padding: 20px 0 10px 0;
+
+        .transparent {
+          display: none;
+        }
+        .svg-icon {
+            display: inline-block;
+            fill: currentColor;
+            stroke: currentColor;
+            stroke-width: 0;
+            height: 1em;
+            width: 1em;
+            vertical-align: middle;
+            margin: 0 6px;
+            font-size: 0.625rem;
+            color: #0654ba;
+        }
+        .footer__btn {
+            padding: 0;
+            background-color: transparent;
+            border: none;
+            font-size: 0.875rem;
+            color: #0654ba;
+        }
+        .footer__btn:focus {
+            outline: 1px dotted #666;
+        }
+        .footer__btn--viewAll {
+            display: none;
+        }
+        .footer__btn--viewLess {
+            display: inline-block;
+        }
+    }
+}
+@media all and (max-width: 599px) {
+    .seo-multimedia-html {
+        padding: 16px;
+        box-sizing: border-box;
+        img {
+            max-width: 50%;
+            max-height: 150px;
+        }
+    }
+}

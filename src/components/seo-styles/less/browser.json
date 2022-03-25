@@ -1,0 +1,9 @@
+{
+    "dependencies": [
+        "./common.less",
+        "./mixins-commons.less",
+        "./mixins.less",
+        "./variables.less",
+        "./variables-common.less"
+    ]
+}

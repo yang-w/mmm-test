@@ -1,0 +1,22 @@
+.seo-content {
+  border: solid 1px @ds4-color-core-gray-gainsboro;
+  color: @ds4-color-core-gray-jet;
+  background-color: white;
+  box-sizing: border-box;
+
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+}
+
+@media all and (max-width: 599px) {
+  .seo-content {
+    width: 100%;
+  }
+}
+// Large Tablet
+@media all and (min-width: 600px) {
+  .seo-content {
+    padding: 16px 24px;
+  }
+}

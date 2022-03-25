@@ -1,0 +1,9 @@
+{
+    "dependencies": [
+      "../seo-styles/less",
+      "./style.less",
+      "jquery-lazyload/jquery.lazyload.js",
+      "./lazy.js"
+    ]
+  }
+  

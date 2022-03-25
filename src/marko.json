@@ -1,0 +1,7 @@
+{
+    "<seo-html>": {
+        "renderer": "./components/seo-html",
+        "@html": "string",
+        "@deviceInfo": "expression"
+    }
+}

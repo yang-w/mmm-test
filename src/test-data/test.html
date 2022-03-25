@@ -1,0 +1,470 @@
+<style>
+    .b-seo-content-carousel {
+        --item-card-width: 20%;
+    }
+    @media screen and (max-width: 1024px) {
+        .b-seo-content-carousel {
+            --item-card-width: 23%;
+        }
+    }
+    @media screen and (max-width: 480px) {
+        .b-seo-content-carousel {
+            --item-card-width: 40%;
+        }
+    }
+    .b-seo-content-carousel__title h2 {
+        margin: 0;
+        font-size: 1.3rem;
+    }
+    .b-seo-content-carousel__wrapper {
+        margin: 16px 0;
+        overflow-x: hidden;
+    }
+    .b-seo-content-carousel__container {
+        position: relative;
+    }
+    .b-seo-content-carousel__screen {
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(to right,#fff 85%,rgba(0,0,0,0) 100%);
+        mask-image: linear-gradient(to right,#fff 85%,rgba(0,0,0,0) 100%);
+    }
+    .b-seo-content-carousel__track {
+        font-size: 0;
+        -webkit-transition: all 0.3s ease 0s;
+        -o-transition: all 0.3s ease 0s;
+        transition: all 0.3s ease 0s;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+    .b-seo-content-carousel__item {
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        padding: 0;
+        margin-right: 16px;
+        width: var(--item-card-width);
+        white-space: normal;
+        scroll-snap-align: start;
+        -webkit-scroll-snap-coordinate: 0;
+        -ms-scroll-snap-coordinate: 0;
+        scroll-snap-coordinate: 0;
+    }
+    .b-seo-content-carousel__item:last-child {
+        margin-right: 0;
+    }
+    .b-seo-content-carousel__item-link {
+        padding: 0 16px;
+        text-decoration: none;
+    }
+    .seo-multimedia-html .content a.b-seo-content-carousel__item-link {
+        text-decoration: none;
+    }
+    .seo-multimedia-html .content a.b-seo-content-carousel__item-link:hover {
+        text-decoration: underline;
+    }
+    .b-seo-content-carousel__item-img {
+        position: relative;
+        overflow: hidden;
+    }
+    .b-seo-content-carousel__item-img img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+    .b-seo-content-carousel__item-desc {
+        font-size: 1.0625rem;
+        margin: 13px 0 0 0;
+        line-height: 25px;
+        text-align: center;
+        color: #333;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        -moz-box-orient: vertical;
+        -moz-line-clamp: 2;
+        display: -webkit-box;
+        white-space: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .b-seo-content-carousel__radio {
+        display: none;
+    }
+    .b-seo-content-carousel-controls {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        width: 100%;
+        height: 100%;
+        padding-left: 8px;
+    }
+    .b-seo-content-carousel-control {
+        cursor: pointer;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+        background: #fff;
+        border: 1px solid #dddddd;
+        box-shadow: 0 2px 2px 0 rgb(0 0 0 / 24%), 0 0 2px 0 rgb(0 0 0 / 12%);
+        border-radius: 50%;
+        position: relative;
+        z-index: 1;
+    }
+    .b-seo-content-carousel-control::before,
+    .b-seo-content-carousel-control::after {
+        content: "";
+        width: 10px;
+        height: 2px;
+        background: #333;
+        position: absolute;
+        top: 50%;
+        left: calc(50% + 1px);
+    }
+    .b-seo-content-carousel-control::before {
+        -webkit-transform: translate(-50%, calc(-50% - 3px)) rotate(45deg);
+        -ms-transform: translate(-50%, calc(-50% - 3px)) rotate(45deg);
+        transform: translate(-50%, calc(-50% - 3px)) rotate(45deg);
+    }
+    .b-seo-content-carousel-control::after {
+        -webkit-transform: translate(-50%, calc(-50% + 3px)) rotate(-45deg);
+        -ms-transform: translate(-50%, calc(-50% + 3px)) rotate(-45deg);
+        transform: translate(-50%, calc(-50% + 3px)) rotate(-45deg);
+    }
+    .b-seo-content-carousel-control--empty {
+        opacity: 0.3;
+        z-index: -1000;
+    }
+    .b-seo-content-carousel-control--secondPrevToFirstSlide,
+    .b-seo-content-carousel-control--thirdPrevToSecondSlide,
+    .b-seo-content-carousel-control--fourthPrevToThirdSlide {
+        -webkit-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+    .b-seo-content-carousel-controls-first,
+    .b-seo-content-carousel-controls-second,
+    .b-seo-content-carousel-controls-third,
+    .b-seo-content-carousel-controls-fourth {
+        display: none;
+    }
+    /* SECOND -> FIRST SLIDE (BACK) */ 
+    #b-seo-content-carousel__secondPrevToFirstSlide:checked
+        ~ .b-seo-content-carousel-controls-first {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+    /* FIRST -> SECOND SLIDE */
+    #b-seo-content-carousel__firstNextToSecondSlide:checked
+        ~ .b-seo-content-carousel__screen
+        .b-seo-content-carousel__track {
+        -webkit-transform: translateX(calc(-4 * var(--item-card-width) - 4 * 16px));
+        -ms-transform: translateX(calc(-4 * var(--item-card-width)) translateX(calc(-4 * 16px)));
+        transform: translateX(calc(-4 * var(--item-card-width) - 4 * 16px));
+    }
+    #b-seo-content-carousel__firstNextToSecondSlide:checked
+        ~ .b-seo-content-carousel-controls-second {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+    #b-seo-content-carousel__firstNextToSecondSlide:checked
+        ~ .b-seo-content-carousel-controls-first {
+        display: none;
+    }
+    /* SECOND -> THIRD SLIDE */
+    #b-seo-content-carousel__secondNextToThirdSlide:checked
+        ~ .b-seo-content-carousel__screen
+        .b-seo-content-carousel__track {
+        -webkit-transform: translateX(calc(-8 * var(--item-card-width) - 8 * 16px));
+        -ms-transform: translateX(calc(-8 * var(--item-card-width)) translateX(calc(-8 * 16px)));
+        transform: translateX(calc(-8 * var(--item-card-width) - 8 * 16px));
+    }
+    #b-seo-content-carousel__secondNextToThirdSlide:checked
+        ~ .b-seo-content-carousel-controls-third {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+    #b-seo-content-carousel__secondNextToThirdSlide:checked
+        ~ .b-seo-content-carousel-controls-second {
+        display: none;
+    }
+    /* SECOND -> FIRST SLIDE (BACK) */
+    #b-seo-content-carousel__secondPrevToFirstSlide:checked
+        ~ .b-seo-content-carousel__screen
+        .b-seo-content-carousel__track {
+        -webkit-transform: translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+    }
+    #b-seo-content-carousel__secondPrevToFirstSlide:checked
+        ~ .b-seo-content-carousel-controls-first {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+    #b-seo-content-carousel__secondPrevToFirstSlide:checked
+        ~ .b-seo-content-carousel-controls-second {
+        display: none;
+    }
+    /* THIRD -> FOURTH SLIDE */
+    #b-seo-content-carousel__thirdNextToFourthSlide:checked
+        ~ .b-seo-content-carousel__screen
+        .b-seo-content-carousel__track {
+        -webkit-transform: translateX(calc(-12 * var(--item-card-width) - 12 * 16px));
+        -ms-transform: translateX(calc(-12 * var(--item-card-width)) translateX(calc(-12 * 16px)));
+        transform: translateX(calc(-12 * var(--item-card-width) - 12 * 16px));
+    }
+    #b-seo-content-carousel__thirdNextToFourthSlide:checked
+        ~ .b-seo-content-carousel-controls-fourth {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+    #b-seo-content-carousel__thirdNextToFourthSlide:checked
+        ~ .b-seo-content-carousel-controls-third {
+        display: none;
+    }
+    /* THIRD -> SECOND SLIDE (BACK) */
+    #b-seo-content-carousel__thirdPrevToSecondSlide:checked
+        ~ .b-seo-content-carousel__screen
+        .b-seo-content-carousel__track {
+        -webkit-transform: translateX(calc(-4 * var(--item-card-width) - 4 * 16px));
+        -ms-transform: translateX(calc(-4 * var(--item-card-width)) translateX(calc(-4 * 16px)));
+        transform: translateX(calc(-4 * var(--item-card-width) - 4 * 16px));
+    }
+    #b-seo-content-carousel__thirdPrevToSecondSlide:checked
+        ~ .b-seo-content-carousel-controls-second {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+    #b-seo-content-carousel__thirdPrevToSecondSlide:checked
+        ~ .b-seo-content-carousel-controls-third {
+        display: none;
+    }
+    /* FOURTH -> THIRD SLIDE (BACK) */
+    #b-seo-content-carousel__fourthPrevToThirdSlide:checked
+        ~ .b-seo-content-carousel__screen
+        .b-seo-content-carousel__track {
+        -webkit-transform: translateX(calc(-8 * var(--item-card-width) - 8 * 16px));
+        -ms-transform: translateX(calc(-8 * var(--item-card-width)) translateX(calc(-8 * 16px)));
+        transform: translateX(calc(-8 * var(--item-card-width) - 8 * 16px));
+    }
+    #b-seo-content-carousel__fourthPrevToThirdSlide:checked
+        ~ .b-seo-content-carousel-controls-third {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+    #b-seo-content-carousel__fourthPrevToThirdSlide:checked
+        ~ .b-seo-content-carousel-controls-fourth {
+        display: none;
+    }
+    @media screen and (max-width: 1024px) {
+        .b-seo-content-carousel__item-desc {
+            font-size: .875rem;
+            font-weight: 400;
+            margin: 8px 0 0 0;
+            line-height: 16px;
+        }
+    }
+    @media screen and (max-width: 767px) {
+        .b-seo-content-carousel__item-link {
+            padding: 0;
+        }
+        .b-seo-content-carousel__track {
+            padding-bottom: 10px;
+            overflow-x: auto;
+            -webkit-transform: translateX(0) !important;
+            -ms-transform: translateX(0) !important;
+            transform: translateX(0) !important;
+        }
+        .b-seo-content-carousel-controls {
+            display: none !important;
+        }
+    }
+    @media screen and (max-width: 480px) {
+        .b-seo-content-carousel__title h2 {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+        }
+    }
+</style>
+<div class="b-seo-content-carousel">
+    <div class="b-seo-content-carousel__title">
+        <h2>Shop by Silhouette</h2>
+    </div>
+    <div class="b-seo-content-carousel__wrapper">
+        <div class="b-seo-content-carousel__container">
+            <input id="b-seo-content-carousel__firstNextToSecondSlide" name="carousel" type="radio" class="b-seo-content-carousel__radio" />
+            <input id="b-seo-content-carousel__secondPrevToFirstSlide" name="carousel" type="radio" class="b-seo-content-carousel__radio" checked />
+            <input id="b-seo-content-carousel__secondNextToThirdSlide" name="carousel" type="radio" class="b-seo-content-carousel__radio" />
+            <input id="b-seo-content-carousel__thirdPrevToSecondSlide" name="carousel" type="radio" class="b-seo-content-carousel__radio" />
+            <input id="b-seo-content-carousel__thirdNextToFourthSlide" name="carousel" type="radio" class="b-seo-content-carousel__radio" />
+            <input id="b-seo-content-carousel__fourthPrevToThirdSlide" name="carousel" type="radio" class="b-seo-content-carousel__radio" />
+
+            <div class="b-seo-content-carousel-controls b-seo-content-carousel-controls-first">
+                <label class="b-seo-content-carousel-control b-seo-content-carousel-control--empty"></label>
+                <label class="b-seo-content-carousel-control b-seo-content-carousel-control--firstNextToSecondSlide"
+                        for="b-seo-content-carousel__firstNextToSecondSlide"></label>
+            </div>
+            <div class="b-seo-content-carousel-controls b-seo-content-carousel-controls-second">
+                <label class="b-seo-content-carousel-control b-seo-content-carousel-control--secondPrevToFirstSlide"
+                    for="b-seo-content-carousel__secondPrevToFirstSlide"></label>
+                <label class="b-seo-content-carousel-control b-seo-content-carousel-control--secondNextToThirdSlide"
+                    for="b-seo-content-carousel__secondNextToThirdSlide"></label>
+            </div>
+            <div class="b-seo-content-carousel-controls b-seo-content-carousel-controls-third">
+                <label class="b-seo-content-carousel-control b-seo-content-carousel-control--thirdPrevToSecondSlide"
+                    for="b-seo-content-carousel__thirdPrevToSecondSlide"></label>
+                <label class="b-seo-content-carousel-control b-seo-content-carousel-control--thirdNextToFourthSlide"
+                    for="b-seo-content-carousel__thirdNextToFourthSlide"></label>
+            </div>
+            <div class="b-seo-content-carousel-controls b-seo-content-carousel-controls-fourth">
+                <label class="b-seo-content-carousel-control b-seo-content-carousel-control--fourthPrevToThirdSlide"
+                    for="b-seo-content-carousel__fourthPrevToThirdSlide"></label>
+                <label class="b-seo-content-carousel-control b-seo-content-carousel-control--empty"></label>
+            </div>
+
+            <div class="b-seo-content-carousel__screen">
+                <div class="b-seo-content-carousel__track">
+                    <div class="b-seo-content-carousel__item">
+                        <a href="https://www.ebay.com/b/Jordan-3/15709/bn_98034847" class="b-seo-content-carousel__item-link">
+                            <div class="b-seo-content-carousel__item-img">
+                                <img alt="Jordan 1 Retro High Silver 25th Anniversary 2010" src="https://i.ebayimg.com/thumbs/images/g/fdMAAOSwvedgSy6u/s-l225.webp">
+                            </div>
+                            <p class="b-seo-content-carousel__item-desc">1 Jordan 1 Retro High Silver 25th Anniversary 2010</p>
+                        </a>
+                    </div>
+                    <div class="b-seo-content-carousel__item">
+                        <a href="https://www.ebay.com/b/Jordan-3/15709/bn_98034847" class="b-seo-content-carousel__item-link">
+                            <div class="b-seo-content-carousel__item-img">
+                                <img alt="Jordan 1 Retro High OG Light Fusion Red 2021" src="https://i.ebayimg.com/thumbs/images/g/e5kAAOSwvEVgtKKX/s-l225.webp">
+                            </div>
+                            <p class="b-seo-content-carousel__item-desc">2 Jordan 1 Retro High OG Light Fusion Red 2021</p>
+                        </a>
+                    </div>
+                    <div class="b-seo-content-carousel__item">
+                        <a href="https://www.ebay.com/b/Jordan-3/15709/bn_98034847" class="b-seo-content-carousel__item-link">
+                            <div class="b-seo-content-carousel__item-img">
+                                <img src="https://i.ebayimg.com/thumbs/images/g/UdQAAOSwjGVgTdig/s-l225.webp" alt="Jordan 1 Retro High Silver 25th Anniversary 2010" />
+                            </div>
+                            <p class="b-seo-content-carousel__item-desc">3 Jordan 1 Retro High Silver 25th Anniversary 2010</p>
+                        </a>
+                    </div>
+                    <div class="b-seo-content-carousel__item">
+                        <a href="https://www.ebay.com/b/Jordan-3/15709/bn_98034847" class="b-seo-content-carousel__item-link">
+                            <div class="b-seo-content-carousel__item-img">
+                                <img alt="Jordan 1 Retro High OG Top 3 2016" src="https://i.ebayimg.com/thumbs/images/g/arcAAOSw4BVgSy6y/s-l225.webp">
+                            </div>
+                            <p class="b-seo-content-carousel__item-desc">4 Jordan 1 Retro High OG Top 3 2016</p>
+                        </a>
+                    </div>
+                    <div class="b-seo-content-carousel__item">
+                        <a href="https://www.ebay.com/b/Jordan-3/15709/bn_98034847" class="b-seo-content-carousel__item-link">
+                            <div class="b-seo-content-carousel__item-img">
+                                <img alt="Jordan 1 Retro High OG Royal 2017" src="https://i.ebayimg.com/thumbs/images/g/f3IAAOSw-DtgUGYD/s-l225.webp">
+                            </div>
+                            <p class="b-seo-content-carousel__item-desc">5 Jordan 1 Retro High OG Royal 2017</p>
+                        </a>
+                    </div>
+                    <div class="b-seo-content-carousel__item">
+                        <a href="https://www.ebay.com/b/Jordan-3/15709/bn_98034847" class="b-seo-content-carousel__item-link">
+                            <div class="b-seo-content-carousel__item-img">
+                                <img alt="Jordan 1 Retro High Silver 25th Anniversary 2010" src="https://i.ebayimg.com/thumbs/images/g/fdMAAOSwvedgSy6u/s-l225.webp">
+                            </div>
+                            <p class="b-seo-content-carousel__item-desc">6 Jordan 1 Retro High Silver 25th Anniversary 2010</p>
+                        </a>
+                    </div>
+                    <div class="b-seo-content-carousel__item">
+                        <a href="https://www.ebay.com/b/Jordan-3/15709/bn_98034847" class="b-seo-content-carousel__item-link">
+                            <div class="b-seo-content-carousel__item-img">
+                                <img alt="Jordan 1 Retro High OG Light Fusion Red 2021" src="https://i.ebayimg.com/thumbs/images/g/e5kAAOSwvEVgtKKX/s-l225.webp">
+                            </div>
+                            <p class="b-seo-content-carousel__item-desc">7 Jordan 1 Retro High OG Light Fusion Red 2021</p>
+                        </a>
+                    </div>
+                    <div class="b-seo-content-carousel__item">
+                        <a href="https://www.ebay.com/b/Jordan-3/15709/bn_98034847" class="b-seo-content-carousel__item-link">
+                            <div class="b-seo-content-carousel__item-img">
+                                <img src="https://i.ebayimg.com/thumbs/images/g/UdQAAOSwjGVgTdig/s-l225.webp" alt="Jordan 1 Retro High Silver 25th Anniversary 2010" />
+                            </div>
+                            <p class="b-seo-content-carousel__item-desc">8 Jordan 1 Retro High Silver 25th Anniversary 2010</p>
+                        </a>
+                    </div>
+                    <div class="b-seo-content-carousel__item">
+                        <a href="https://www.ebay.com/b/Jordan-3/15709/bn_98034847" class="b-seo-content-carousel__item-link">
+                            <div class="b-seo-content-carousel__item-img">
+                                <img alt="Jordan 1 Retro High OG Top 3 2016" src="https://i.ebayimg.com/thumbs/images/g/arcAAOSw4BVgSy6y/s-l225.webp">
+                            </div>
+                            <p class="b-seo-content-carousel__item-desc">9 Jordan 1 Retro High OG Top 3 2016</p>
+                        </a>
+                    </div>
+                    <div class="b-seo-content-carousel__item">
+                        <a href="https://www.ebay.com/b/Jordan-3/15709/bn_98034847" class="b-seo-content-carousel__item-link">
+                            <div class="b-seo-content-carousel__item-img">
+                                <img alt="Jordan 1 Retro High OG Royal 2017" src="https://i.ebayimg.com/thumbs/images/g/f3IAAOSw-DtgUGYD/s-l225.webp">
+                            </div>
+                            <p class="b-seo-content-carousel__item-desc">10 Jordan 1 Retro High OG Royal 2017</p>
+                        </a>
+                    </div>  
+                    <div class="b-seo-content-carousel__item">
+                        <a href="https://www.ebay.com/b/Jordan-3/15709/bn_98034847" class="b-seo-content-carousel__item-link">
+                            <div class="b-seo-content-carousel__item-img">
+                                <img alt="Jordan 1 Retro High Silver 25th Anniversary 2010" src="https://i.ebayimg.com/thumbs/images/g/fdMAAOSwvedgSy6u/s-l225.webp">
+                            </div>
+                            <p class="b-seo-content-carousel__item-desc">11 Jordan 1 Retro High Silver 25th Anniversary 2010</p>
+                        </a>
+                    </div>
+                    <div class="b-seo-content-carousel__item">
+                        <a href="https://www.ebay.com/b/Jordan-3/15709/bn_98034847" class="b-seo-content-carousel__item-link">
+                            <div class="b-seo-content-carousel__item-img">
+                                <img alt="Jordan 1 Retro High OG Light Fusion Red 2021" src="https://i.ebayimg.com/thumbs/images/g/e5kAAOSwvEVgtKKX/s-l225.webp">
+                            </div>
+                            <p class="b-seo-content-carousel__item-desc">12 Jordan 1 Retro High OG Light Fusion Red 2021</p>
+                        </a>
+                    </div>
+                    <div class="b-seo-content-carousel__item">
+                        <a href="https://www.ebay.com/b/Jordan-3/15709/bn_98034847" class="b-seo-content-carousel__item-link">
+                            <div class="b-seo-content-carousel__item-img">
+                                <img src="https://i.ebayimg.com/thumbs/images/g/UdQAAOSwjGVgTdig/s-l225.webp" alt="Jordan 1 Retro High Silver 25th Anniversary 2010" />
+                            </div>
+                            <p class="b-seo-content-carousel__item-desc">13 Jordan 1 Retro High Silver 25th Anniversary 2010</p>
+                        </a>
+                    </div>
+                    <div class="b-seo-content-carousel__item">
+                        <a href="https://www.ebay.com/b/Jordan-3/15709/bn_98034847" class="b-seo-content-carousel__item-link">
+                            <div class="b-seo-content-carousel__item-img">
+                                <img alt="Jordan 1 Retro High OG Top 3 2016" src="https://i.ebayimg.com/thumbs/images/g/arcAAOSw4BVgSy6y/s-l225.webp">
+                            </div>
+                            <p class="b-seo-content-carousel__item-desc">14 Jordan 1 Retro High OG Top 3 2016</p>
+                        </a>
+                    </div>
+                    <div class="b-seo-content-carousel__item">
+                        <a href="https://www.ebay.com/b/Jordan-3/15709/bn_98034847" class="b-seo-content-carousel__item-link">
+                            <div class="b-seo-content-carousel__item-img">
+                                <img alt="Jordan 1 Retro High OG Royal 2017" src="https://i.ebayimg.com/thumbs/images/g/f3IAAOSw-DtgUGYD/s-l225.webp">
+                            </div>
+                            <p class="b-seo-content-carousel__item-desc">15 Jordan 1 Retro High OG Royal 2017</p>
+                        </a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

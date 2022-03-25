@@ -1,0 +1,30 @@
+$ {
+    var model = component.model;
+}
+
+<if(model && model.html)>
+<div class=["seo-content", "seo-multimedia-html", "b-module", "seo-mmm-test", { "show-less": (model.isSmall && !state.isExpanded) }]>
+    <div class="content">$!{model.html}</div>
+    <div class="footer" if(model.isSmall)>
+        <div class="transparent"></div>
+        <button class="footer__btn footer__btn--viewAll" 
+            on-click("showMore") 
+            aria-expanded="false"
+            aria-label=model.viewMoreAccessibilityText>
+            ${model.viewMore}
+            <svg aria-hidden="true" class="svg-icon" height="16" width="16">
+                <use xlink:href="#svg-icon-chevron-down"></use>
+            </svg>
+        </button>
+        <button class="footer__btn footer__btn--viewLess" 
+            on-click("showLess") 
+            aria-expanded="true"
+            aria-label=model.viewLessAccessibilityText>
+            ${model.viewLess}
+            <svg aria-hidden="true" class="svg-icon" height="16" width="16">
+                <use xlink:href="#svg-icon-chevron-up"></use>
+            </svg>
+        </button>
+    </div>
+</div>
+</if>
